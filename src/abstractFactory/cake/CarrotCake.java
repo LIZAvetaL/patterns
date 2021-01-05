@@ -1,9 +1,11 @@
-package abstract_factory;
+package abstractFactory.cake;
+
+import abstractFactory.Cake;
 
 public class CarrotCake implements Cake {
 
     @Override
-    public void cook() {
+    public void paint() {
         System.out.println("You are cooking carrot cake");
     }
 }
