@@ -6,9 +6,9 @@ public class Main {
         AbstractFactory abstractFactory;
 
         abstractFactory = FactoryProvider.getFactory("Cafe");
-        Cake toy = abstractFactory.cookCake("Cafe");
+        Cake cake = abstractFactory.cookCake("Carrot");
 
         abstractFactory = FactoryProvider.getFactory("Restaurant");
-        Pizza color =abstractFactory.cookPizza("Restaurant");
+        Pizza pizza =abstractFactory.cookPizza("Pepperoni");
     }
 }
