@@ -77,3 +77,65 @@ SELECT Goods.good_name FROM Goods
 JOIN Payments ON (Payments.good=Goods.good_id)
 GROUP BY Payments.good
 HAVING COUNT(Payments.good)>1
+
+--22
+SELECT member_name
+FROM FamilyMembers
+WHERE status='mother'
+
+--23
+SELECT g.good_name, p.unit_price
+FROM Payments AS p
+JOIN Goods AS g ON p.good=g.good_id
+AND  g.type=(SELECT gt.good_type_id
+            FROM GoodTypes AS gt
+            WHERE gt.good_type_name='delicacies')
+ORDER BY unit_price DESC
+LIMIT 1
+
+--28
+SELECT COUNT(*) AS count
+FROM Trip
+JOIN Company ON Company.id=Trip.company
+AND Trip.town_from='Rostov' AND Trip.town_to='Moscow'
+
+--29
+SELECT DISTINCT Passenger.name
+FROM Pass_in_trip
+JOIN Passenger ON Passenger.id=Pass_in_trip.passenger
+JOIN Trip as t ON t.id=Pass_in_trip.trip
+                  AND t.town_to='Moscow'
+                  AND t.plane='TU-134'
+
+--30
+SELECT Pass_in_trip.trip, COUNT(Pass_in_trip.passenger) as count
+FROM Pass_in_trip
+JOIN Passenger ON Passenger.id=Pass_in_trip.passenger
+GROUP BY Pass_in_trip.trip
+ORDER BY count DESC
+
+--31
+SELECT * FROM FamilyMembers
+WHERE  member_name LIKE '%Quincey'
+
+--33
+SELECT AVG(Payments.unit_price) as cost
+FROM Payments
+JOIN Goods as g ON Payments.good=g.good_id
+                   AND (g.good_name='red caviar' OR g.good_name='black caviar')
+
+--34
+SELECT COUNT(id) as count
+FROM  Class
+WHERE name LIKE '10%'
+
+--36
+SELECT *
+FROM Student
+WHERE address LIKE 'ul. Pushkina%'
+
+--39
+SELECT COUNT(s.student) as count
+FROM Student_in_class as s
+JOIN Class as c ON s.class=c.id
+                AND c.name='10 B'
