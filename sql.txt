@@ -139,3 +139,58 @@ SELECT COUNT(s.student) as count
 FROM Student_in_class as s
 JOIN Class as c ON s.class=c.id
                 AND c.name='10 B'
+
+--40
+SELECT Subject.name as subjects
+FROM Subject
+JOIN Schedule ON Schedule.subject=Subject.id
+JOIN Teacher ON  Teacher.id=Schedule.teacher
+                AND Teacher.last_name='Romashkin'
+
+--41
+SELECT start_pair
+FROM Timepair
+WHERE id=4
+
+--42
+SELECT TIMEDIFF(MAX(end_pair), MIN(start_pair)) AS time
+FROM Timepair
+WHERE id=4 OR id=2
+
+--43
+SELECT Teacher.last_name
+FROM Teacher
+JOIN Schedule ON Schedule.teacher=Teacher.id
+JOIN Subject ON Subject.id=Schedule.subject
+                AND Subject.name='Physical Culture'
+ORDER BY Teacher.last_name
+
+--44
+SELECT MAX(TIMESTAMPDIFF(YEAR,Student.birthday, CURDATE())) as max_year
+FROM Student
+JOIN Student_in_class ON Student_in_class.student=Student.id
+JOIN Class ON Class.id=Student_in_class.class
+            AND Class.name LIKE '10%'
+
+--45
+SELECT classroom
+FROM Schedule
+GROUP BY classroom
+HAVING COUNT(classroom)=(SELECT COUNT(classroom)
+                         FROM Schedule
+                         GROUP BY classroom
+                         ORDER BY COUNT(classroom) DESC
+                         LIMIT 1)
+
+--46
+SELECT DISTINCT Class.name
+FROM Class
+JOIN Schedule on Schedule.class=Class.id
+JOIN Teacher on Teacher.id=Schedule.teacher
+                AND Teacher.last_name='Krauze'
+
+--47
+SELECT COUNT(Schedule.teacher) as count
+FROM Schedule
+JOIN Teacher on Teacher.id=Schedule.teacher
+WHERE Teacher.last_name='Krauze' AND Schedule.date='2019-08-30'
